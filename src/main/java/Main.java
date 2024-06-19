@@ -13,15 +13,18 @@ public class Main {
                 new Order("Laptop", 1500.0),
                 new Order("Tablet", 500.0),
                 new Order("Smartphone", 900.0)
-
-
         );
 
-    Map<String,Double> map=orders
+    Map<String,Double> map= orders
                  .stream()
                  .collect(Collectors.groupingBy(Order::getProduct,Collectors.summingDouble(Order::getCost)));
-
-        System.out.println(Stream.of(map).collect(Collectors.toMap(e->e.keySet().stream().sorted(Comparator.comparingDouble(s-> map.get(s)).reversed()).toList(),e->e.values().stream().sorted(Comparator.reverseOrder()).toList()))
-    );
+        System.out.println(
+        Stream.of(map)
+                .collect(Collectors.toMap
+                        (e->e.keySet().stream().sorted(Comparator.comparingDouble(s-> map.get(s)).reversed()).toList()
+                                , e->e.values().stream().sorted(Comparator.reverseOrder())
+                                        .toList())
+    )
+        );
     }
 }
